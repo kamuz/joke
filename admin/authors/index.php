@@ -1,5 +1,15 @@
 <?php
 
+// Add new author
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
+
+if (isset($_GET['add'])) {
+  $pageTitle = 'New author';
+  include 'form.html.php';
+  exit();
+}
+
 // Delete author and his categories and jokes
 
 if (isset($_POST['action']) && $_POST['action'] == 'Delete'){
