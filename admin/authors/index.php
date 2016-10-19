@@ -6,7 +6,34 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 
 if (isset($_GET['add'])) {
   $pageTitle = 'New author';
+  $action = 'addform';
+  $name = '';
+  $email = '';
+  $id = '';
+  $button = 'Add author';
   include 'form.html.php';
+  exit();
+}
+
+if (isset($_GET['addform'])) {
+  include $_SERVER['DOCUMENT_ROOT'] . '/includes/db.inc.php';
+
+  try {
+    $sql = 'INSERT INTO author SET
+      name = :name,
+      email = :email';
+    $s = $pdo->prepare($sql);
+    $s->bindValue(':name', $_POST['name']);
+    $s->bindValue(':email', $_POST['email']);
+    $s->execute();
+  }
+  catch (Exception $e) {
+    $error = 'Error adding submitted author.';
+    include 'error.html.php';
+    exit();
+  }
+  
+  header('Location: .');
   exit();
 }
 
